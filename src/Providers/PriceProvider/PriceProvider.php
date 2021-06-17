@@ -11,20 +11,14 @@ class PriceProvider
 {
     protected $user;
     protected $offer;
-    protected $defaultPriceProvider;
 
-    public function __construct(OfferInterface $offer, DefaultPriceProvider $defaultPriceProvider)
+    public function __construct(OfferInterface $offer)
     {
         $this->offer = $offer;
-        $this->defaultPriceProvider = $defaultPriceProvider;
     }
 
     public function getPrice(Product $product, User $user): float
     {
-        $price = $this->offer->getOffer($product, $user);
-        if (! $price) {
-            $price = $this->defaultPriceProvider->getPrice($product);
-        }
-        return $price;
+        return $this->offer->getOffer($product, $user);
     }
 }
